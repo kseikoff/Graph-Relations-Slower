@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -65,7 +66,7 @@ public class Main {
         };
 
         for(int i = 0; i < paths_container.size(); i++){
-            if(paths_container.get(i).get(0) == paths_container.get(i).get(1)){
+            if(Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1))){
                 reflexivity.set(paths_container.get(i).get(0) - 1, true);
             }
             if(paths_container.contains(Main.reverseIntegerArrayList(paths_container.get(i)))){
@@ -113,10 +114,20 @@ public class Main {
                                 }
                                 else{
                                     if(transitivity.get(i) != 2){
-                                        transitivity.set(i, 2);
+                                        if(transitivity.get(i) != 0 && transitivity.get(i) != -1){
+                                            transitivity.set(i, 2);
+                                        }
+                                        else if(transitivity.get(i) != -1) {
+                                            transitivity.set(i, -1);
+                                        }
                                     }
                                     if(transitivity.get(j) != 2){
-                                        transitivity.set(j, 2);
+                                        if(transitivity.get(j) != 0 && transitivity.get(j) != -1){
+                                            transitivity.set(j, 2);
+                                        }
+                                        else if(transitivity.get(j) != -1) {
+                                            transitivity.set(j, -1);
+                                        }
                                     }
                                 }
                             }
