@@ -72,12 +72,12 @@ public class Main {
             if(paths_container.contains(Main.reverseIntegerArrayList(paths_container.get(i)))){
                 symmetric.set(i, true);
             }
-            if((paths_container.get(i).get(0) != paths_container.get(i).get(1))){
+            if((!Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1)))){
                 for(int j = 0; j < paths_container.size(); j++) {
                     if(i != j){
-                        if ((paths_container.get(i).get(1) == paths_container.get(j).get(0))){
-                            if((paths_container.get(j).get(0) != paths_container.get(j).get(1))
-                                    && (paths_container.get(i).get(0) != paths_container.get(j).get(1))){
+                        if ((Objects.equals(paths_container.get(i).get(1), paths_container.get(j).get(0)))){
+                            if((!Objects.equals(paths_container.get(j).get(0), paths_container.get(j).get(1)))
+                                    && (!Objects.equals(paths_container.get(i).get(0), paths_container.get(j).get(1)))){
                                 ArrayList<Integer> transitivity_path = new ArrayList<>(2);
                                 transitivity_path.add(paths_container.get(i).get(0));
                                 transitivity_path.add(paths_container.get(j).get(1));
@@ -146,21 +146,18 @@ public class Main {
                 }
             }
         }
-        if(transitivity.contains(2)){
+        if(transitivity.contains(2) || (transitivity.contains(1) && transitivity.contains(-1))){
             System.out.println("Нетранзитивный");
         }
         else if(!transitivity.contains(-1) && transitivity.contains(1)){
             System.out.println("Транзитивный");
         }
-        else if((Main.count(transitivity, 1) == 0) && transitivity.contains(-1)){
+        else if(!transitivity.contains(1) && transitivity.contains(-1)){
             System.out.println("Антитранзитивный");
         }
         else if((Main.count(transitivity, 0) == transitivity.size()
                 || Main.count(transitivity, 3) == transitivity.size())){
             System.out.println("Транзитивный/Антитранзитивный/Нетранзитивный");
-        }
-        else{
-            System.out.println("Нетранзитивный");
         }
         if(!symmetric.contains(false)){
             System.out.println("Симметричный");
