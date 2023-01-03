@@ -23,21 +23,21 @@ public class Main {
             System.exit(0);
         }
 
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>(edge_vertex_container[0]);
+        ArrayList<ArrayList<Integer>> paths_container = new ArrayList<>(edge_vertex_container[0]);
 
         for(int i = 0; i < edge_vertex_container[0]; i++) {
-            String paths = scanner.nextLine();
-            while(paths.split(" ").length != 2){
+            String path_values = scanner.nextLine();
+            while(path_values.split(" ").length != 2){
                 System.out.println("Введите два числа через пробел");
-                paths = scanner.nextLine();
+                path_values = scanner.nextLine();
             }
 
-            ArrayList<Integer> list1 = new ArrayList<>(2);
+            ArrayList<Integer> path = new ArrayList<>(2);
 
             for(int j = 0; j < 2; j++) {
-                list1.add(Integer.parseInt(paths.split(" ")[j]));
+                path.add(Integer.parseInt(path_values.split(" ")[j]));
             }
-            list.add(list1);
+            paths_container.add(path);
         }
 
         ArrayList<Boolean> symmetric = new ArrayList<>(edge_vertex_container[0]){
@@ -64,22 +64,23 @@ public class Main {
             }
         };
 
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).get(0) == list.get(i).get(1)){
-                reflexivity.set(list.get(i).get(0) - 1, true);
+        for(int i = 0; i < paths_container.size(); i++){
+            if(paths_container.get(i).get(0) == paths_container.get(i).get(1)){
+                reflexivity.set(paths_container.get(i).get(0) - 1, true);
             }
-            if(list.contains(Main.reverseIntegerArrayList(list.get(i)))){
+            if(paths_container.contains(Main.reverseIntegerArrayList(paths_container.get(i)))){
                 symmetric.set(i, true);
             }
-            if((list.get(i).get(0) != list.get(i).get(1))){
-                for(int j = 0; j < list.size(); j++) {
+            if((paths_container.get(i).get(0) != paths_container.get(i).get(1))){
+                for(int j = 0; j < paths_container.size(); j++) {
                     if(i != j){
-                        if ((list.get(i).get(1) == list.get(j).get(0))){
-                            if((list.get(j).get(0) != list.get(j).get(1)) && (list.get(i).get(0) != list.get(j).get(1))){
-                                ArrayList<Integer> temp = new ArrayList<>(2);
-                                temp.add(list.get(i).get(0));
-                                temp.add(list.get(j).get(1));
-                                if (list.contains(temp)) {
+                        if ((paths_container.get(i).get(1) == paths_container.get(j).get(0))){
+                            if((paths_container.get(j).get(0) != paths_container.get(j).get(1))
+                                    && (paths_container.get(i).get(0) != paths_container.get(j).get(1))){
+                                ArrayList<Integer> transitivity_path = new ArrayList<>(2);
+                                transitivity_path.add(paths_container.get(i).get(0));
+                                transitivity_path.add(paths_container.get(j).get(1));
+                                if (paths_container.contains(transitivity_path)) {
                                     if (transitivity.get(i) == -1){
                                         transitivity.set(i, 2);
                                     }
@@ -96,12 +97,12 @@ public class Main {
                                             transitivity.set(j, 1);
                                         }
                                     }
-                                    if(transitivity.get(list.indexOf(temp)) == -1){
-                                        transitivity.set(list.indexOf(temp), 2);
+                                    if(transitivity.get(paths_container.indexOf(transitivity_path)) == -1){
+                                        transitivity.set(paths_container.indexOf(transitivity_path), 2);
                                     }
                                     else{
-                                        if(transitivity.get(list.indexOf(temp)) != 2){
-                                            transitivity.set(list.indexOf(temp), 1);
+                                        if(transitivity.get(paths_container.indexOf(transitivity_path)) != 2){
+                                            transitivity.set(paths_container.indexOf(transitivity_path), 1);
                                         }
                                     }
                                 }
@@ -111,8 +112,12 @@ public class Main {
                                         transitivity.set(j, -1);
                                 }
                                 else{
-                                    transitivity.set(i, 2);
-                                    transitivity.set(j, 2);
+                                    if(transitivity.get(i) != 2){
+                                        transitivity.set(i, 2);
+                                    }
+                                    if(transitivity.get(j) != 2){
+                                        transitivity.set(j, 2);
+                                    }
                                 }
                             }
                             else{
