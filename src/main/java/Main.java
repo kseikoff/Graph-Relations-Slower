@@ -9,7 +9,7 @@ public class Main {
 
         String edge_vertex_values = scanner.nextLine();
         while(edge_vertex_values.split(" ").length != 2){
-            System.out.println("Please enter two numbers separated by a space");
+            System.out.println("Введите два числа через пробел");
             edge_vertex_values = scanner.nextLine();
         }
         for(int i = 0; i < 2; i++) {edge_vertex_container[i] = Integer.parseInt(edge_vertex_values.split(" ")[i]);
@@ -28,7 +28,7 @@ public class Main {
         for(int i = 0; i < edge_vertex_container[0]; i++) {
             String paths = scanner.nextLine();
             while(paths.split(" ").length != 2){
-                System.out.println("Please enter two numbers separated by a space");
+                System.out.println("Введите два числа через пробел");
                 paths = scanner.nextLine();
             }
 
