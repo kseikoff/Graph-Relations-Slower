@@ -159,6 +159,9 @@ public class Main {
                 || Main.count(transitivity, 3) == transitivity.size())){
             System.out.println("Транзитивный/Антитранзитивный/Нетранзитивный");
         }
+        else{
+            System.out.println("Нетранзитивный");
+        }
         if(!symmetric.contains(false)){
             System.out.println("Симметричный");
         }
