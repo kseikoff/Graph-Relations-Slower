@@ -10,10 +10,6 @@ public class Main {
         boolean deuce_presence = false;
 
         String edge_vertex_values = scanner.nextLine();
-        while(edge_vertex_values.split(" ").length != 2){
-            System.out.println("Введите два числа через пробел");
-            edge_vertex_values = scanner.nextLine();
-        }
         for(int i = 0; i < 2; i++) {edge_vertex_container[i] = Integer.parseInt(edge_vertex_values.split(" ")[i]);
         }
         if(edge_vertex_container[0] == 0 && edge_vertex_container[1] == 0){
@@ -29,10 +25,6 @@ public class Main {
 
         for(int i = 0; i < edge_vertex_container[0]; i++) {
             String path_values = scanner.nextLine();
-            while(path_values.split(" ").length != 2){
-                System.out.println("Введите два числа через пробел");
-                path_values = scanner.nextLine();
-            }
 
             ArrayList<Integer> path = new ArrayList<>(2);
 
@@ -122,7 +114,7 @@ public class Main {
                                             transitivity.set(i, 2);
                                             deuce_presence = true;
                                         }
-                                        else if(transitivity.get(i) != -1) {
+                                        else {
                                             transitivity.set(i, -1);
                                         }
                                     }
@@ -131,13 +123,12 @@ public class Main {
                                             transitivity.set(j, 2);
                                             deuce_presence = true;
                                         }
-                                        else if(transitivity.get(j) != -1) {
+                                        else {
                                             transitivity.set(j, -1);
                                         }
                                     }
                                 }
-                            }
-                            else{
+                            } else {
                                 if(transitivity.get(j) == 0){
                                     transitivity.set(j, 3);
                                 }
@@ -161,8 +152,7 @@ public class Main {
         else if(!transitivity.contains(1) && transitivity.contains(-1)){
             System.out.println("Антитранзитивный");
         }
-        else if((Main.count(transitivity, 0) == transitivity.size()
-                || Main.count(transitivity, 3) == transitivity.size())){
+        else {
             System.out.println("Транзитивный/Антитранзитивный/Нетранзитивный");
         }
         if(!symmetric.contains(false)){
@@ -190,14 +180,5 @@ public class Main {
             list1.add(list.get(i));
         }
         return list1;
-    }
-    public static int count(ArrayList<Integer> list, int value){
-        int count = 0;
-        for (Integer integer : list) {
-            if (integer == value) {
-                count++;
-            }
-        }
-        return count;
     }
 }
