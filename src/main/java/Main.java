@@ -8,6 +8,8 @@ public class Main {
 
         int[] edge_vertex_container = new int[2];
         boolean deuce_presence = false;
+        int count_zeroes_for_symmetric;
+        int count_zeroes_for_reflexivity;
 
         String edge_vertex_values = scanner.nextLine();
 
@@ -36,21 +38,9 @@ public class Main {
             paths_container.add(path);
         }
 
-        ArrayList<Boolean> symmetric = new ArrayList<>(edge_vertex_container[0]){
-            {
-                for(int i = 0; i < edge_vertex_container[0]; i++) {
-                    add(false);
-                }
-            }
-        };
+        count_zeroes_for_symmetric = edge_vertex_container[0];
 
-        ArrayList<Boolean> reflexivity = new ArrayList<>(edge_vertex_container[1]){
-            {
-                for(int i = 0; i < edge_vertex_container[1]; i++) {
-                    add(false);
-                }
-            }
-        };
+        count_zeroes_for_reflexivity = edge_vertex_container[1];
 
         ArrayList<Integer> transitivity = new ArrayList<>(edge_vertex_container[0]){
             {
@@ -62,13 +52,13 @@ public class Main {
 
         for(int i = 0; i < paths_container.size(); i++){
             if(Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1))){
-                reflexivity.set(paths_container.get(i).get(0) - 1, true);
+                count_zeroes_for_reflexivity -= 1;
             }
             ArrayList<Integer> reversed_path = new ArrayList<>(2);
             reversed_path.add(paths_container.get(i).get(1));
             reversed_path.add(paths_container.get(i).get(0));
             if(paths_container.contains(reversed_path)){
-                symmetric.set(i, true);
+                count_zeroes_for_symmetric -= 1;
             }
             if((!Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1)))){
                 for(int j = 0; j < paths_container.size(); j++) {
@@ -148,6 +138,24 @@ public class Main {
                 }
             }
         }
+        if(count_zeroes_for_symmetric == 0){
+            System.out.println("Симметричный");
+        }
+        else if(count_zeroes_for_symmetric == edge_vertex_container[0]){
+            System.out.println("Антисимметричный");
+        }
+        else{
+            System.out.println("Несимметричный");
+        }
+        if(count_zeroes_for_reflexivity == 0){
+            System.out.println("Рефлексивный");
+        }
+        else if(count_zeroes_for_reflexivity == edge_vertex_container[1]){
+            System.out.println("Антирефлексивный");
+        }
+        else{
+            System.out.println("Нерефлексивный");
+        }
         if(deuce_presence || (transitivity.contains(1) && transitivity.contains(-1))){
             System.out.println("Нетранзитивный");
         }
@@ -159,24 +167,6 @@ public class Main {
         }
         else {
             System.out.println("Транзитивный/Антитранзитивный/Нетранзитивный");
-        }
-        if(!symmetric.contains(false)){
-            System.out.println("Симметричный");
-        }
-        else if(symmetric.contains(true)){
-            System.out.println("Несимметричный");
-        }
-        else{
-            System.out.println("Антисимметричный");
-        }
-        if(!reflexivity.contains(false)){
-            System.out.println("Рефлексивный");
-        }
-        else if(reflexivity.contains(true)){
-            System.out.println("Нерефлексивный");
-        }
-        else{
-            System.out.println("Антирефлексивный");
         }
     }
 }
