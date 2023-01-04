@@ -7,6 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         int[] edge_vertex_container = new int[2];
+        boolean deuce_presence = false;
 
         String edge_vertex_values = scanner.nextLine();
         while(edge_vertex_values.split(" ").length != 2){
@@ -84,6 +85,7 @@ public class Main {
                                 if (paths_container.contains(transitivity_path)) {
                                     if (transitivity.get(i) == -1){
                                         transitivity.set(i, 2);
+                                        deuce_presence = true;
                                     }
                                     else{
                                         if(transitivity.get(i) != 2){
@@ -92,6 +94,7 @@ public class Main {
                                     }
                                     if(transitivity.get(j) == -1){
                                         transitivity.set(j, 2);
+                                        deuce_presence = true;
                                     }
                                     else{
                                         if(transitivity.get(j) != 2){
@@ -100,6 +103,7 @@ public class Main {
                                     }
                                     if(transitivity.get(paths_container.indexOf(transitivity_path)) == -1){
                                         transitivity.set(paths_container.indexOf(transitivity_path), 2);
+                                        deuce_presence = true;
                                     }
                                     else{
                                         if(transitivity.get(paths_container.indexOf(transitivity_path)) != 2){
@@ -116,6 +120,7 @@ public class Main {
                                     if(transitivity.get(i) != 2){
                                         if(transitivity.get(i) != 0 && transitivity.get(i) != -1){
                                             transitivity.set(i, 2);
+                                            deuce_presence = true;
                                         }
                                         else if(transitivity.get(i) != -1) {
                                             transitivity.set(i, -1);
@@ -124,6 +129,7 @@ public class Main {
                                     if(transitivity.get(j) != 2){
                                         if(transitivity.get(j) != 0 && transitivity.get(j) != -1){
                                             transitivity.set(j, 2);
+                                            deuce_presence = true;
                                         }
                                         else if(transitivity.get(j) != -1) {
                                             transitivity.set(j, -1);
@@ -146,7 +152,7 @@ public class Main {
                 }
             }
         }
-        if(transitivity.contains(2) || (transitivity.contains(1) && transitivity.contains(-1))){
+        if(deuce_presence || (transitivity.contains(1) && transitivity.contains(-1))){
             System.out.println("Нетранзитивный");
         }
         else if(!transitivity.contains(-1) && transitivity.contains(1)){
