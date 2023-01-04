@@ -10,8 +10,10 @@ public class Main {
         boolean deuce_presence = false;
 
         String edge_vertex_values = scanner.nextLine();
-        for(int i = 0; i < 2; i++) {edge_vertex_container[i] = Integer.parseInt(edge_vertex_values.split(" ")[i]);
-        }
+
+        edge_vertex_container[0] = Integer.parseInt(edge_vertex_values.split(" ")[0]);
+        edge_vertex_container[1] = Integer.parseInt(edge_vertex_values.split(" ")[1]);
+
         if(edge_vertex_container[0] == 0 && edge_vertex_container[1] == 0){
             System.out.println("Для пустого графа выполняются все отношения");
             System.exit(0);
@@ -28,9 +30,9 @@ public class Main {
 
             ArrayList<Integer> path = new ArrayList<>(2);
 
-            for(int j = 0; j < 2; j++) {
-                path.add(Integer.parseInt(path_values.split(" ")[j]));
-            }
+            path.add(Integer.parseInt(path_values.split(" ")[0]));
+            path.add(Integer.parseInt(path_values.split(" ")[1]));
+
             paths_container.add(path);
         }
 
@@ -62,7 +64,10 @@ public class Main {
             if(Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1))){
                 reflexivity.set(paths_container.get(i).get(0) - 1, true);
             }
-            if(paths_container.contains(Main.reverseIntegerArrayList(paths_container.get(i)))){
+            ArrayList<Integer> reversed_path = new ArrayList<>(2);
+            reversed_path.add(paths_container.get(i).get(1));
+            reversed_path.add(paths_container.get(i).get(0));
+            if(paths_container.contains(reversed_path)){
                 symmetric.set(i, true);
             }
             if((!Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1)))){
@@ -105,8 +110,8 @@ public class Main {
                                 }
                                 else if(transitivity.get(i) != 1 && transitivity.get(j) != 1
                                         && transitivity.get(i) != 2 && transitivity.get(j) != 2){
-                                        transitivity.set(i, -1);
-                                        transitivity.set(j, -1);
+                                    transitivity.set(i, -1);
+                                    transitivity.set(j, -1);
                                 }
                                 else{
                                     if(transitivity.get(i) != 2){
@@ -173,12 +178,5 @@ public class Main {
         else{
             System.out.println("Антирефлексивный");
         }
-    }
-    public static ArrayList<Integer> reverseIntegerArrayList(ArrayList<Integer> list){
-        ArrayList<Integer> list1 = new ArrayList<>(list.size());
-        for(int i = list.size() - 1; i >= 0; i--){
-            list1.add(list.get(i));
-        }
-        return list1;
     }
 }
