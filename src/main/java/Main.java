@@ -66,46 +66,44 @@ public class Main {
         };
 
         for(int i = 0; i < paths_container.size(); i++){
-            ArrayList<Integer> reversed_path = new ArrayList<>(2);
-            reversed_path.add(paths_container.get(i).get(1));
-            reversed_path.add(paths_container.get(i).get(0));
-            if(paths_container.contains(reversed_path)){
-                symmetric.set(i, true);
-                count_zeroes_for_symmetric -= 1;
-            }
-            if((!Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1)))){
+            if(!Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1))){
                 for(int j = 0; j < paths_container.size(); j++) {
                     if(i != j){
-                        if ((Objects.equals(paths_container.get(i).get(1), paths_container.get(j).get(0)))){
-                            if((!Objects.equals(paths_container.get(j).get(0), paths_container.get(j).get(1)))
-                                    && (!Objects.equals(paths_container.get(i).get(0), paths_container.get(j).get(1)))){
-                                ArrayList<Integer> transitivity_path = new ArrayList<>(2);
-                                transitivity_path.add(paths_container.get(i).get(0));
-                                transitivity_path.add(paths_container.get(j).get(1));
-                                if (paths_container.contains(transitivity_path)) {
-                                    if (transitivity.get(i) == -1){
-                                        transitivity.set(i, 2);
-                                        deuce_presence = true;
-                                    }
-                                    else{
-                                        if(transitivity.get(i) != 2){
-                                            transitivity.set(i, 1);
-                                        }
-                                    }
-                                }
-                                else if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
-                                    transitivity.set(i, -1);
-                                }
-                                else{
-                                    if(transitivity.get(i) != 2){
-                                        if(transitivity.get(i) != 0 && transitivity.get(i) != -1){
+                        if (Objects.equals(paths_container.get(i).get(1), paths_container.get(j).get(0))){
+                            if(!Objects.equals(paths_container.get(j).get(0), paths_container.get(j).get(1))){
+                                if(!Objects.equals(paths_container.get(i).get(0), paths_container.get(j).get(1))){
+                                    ArrayList<Integer> transitivity_path = new ArrayList<>(2);
+                                    transitivity_path.add(paths_container.get(i).get(0));
+                                    transitivity_path.add(paths_container.get(j).get(1));
+                                    if (paths_container.contains(transitivity_path)) {
+                                        if (transitivity.get(i) == -1){
                                             transitivity.set(i, 2);
                                             deuce_presence = true;
                                         }
-                                        else {
-                                            transitivity.set(i, -1);
+                                        else{
+                                            if(transitivity.get(i) != 2){
+                                                transitivity.set(i, 1);
+                                            }
                                         }
                                     }
+                                    else if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
+                                        transitivity.set(i, -1);
+                                    }
+                                    else{
+                                        if(transitivity.get(i) != 2){
+                                            if(transitivity.get(i) != 0 && transitivity.get(i) != -1){
+                                                transitivity.set(i, 2);
+                                                deuce_presence = true;
+                                            }
+                                            else {
+                                                transitivity.set(i, -1);
+                                            }
+                                        }
+                                    }
+                                }
+                                else{
+                                    symmetric.set(i, true);
+                                    count_zeroes_for_symmetric -= 1;
                                 }
                             }
                         }
@@ -113,6 +111,8 @@ public class Main {
                 }
             }
             else{
+                symmetric.set(i, true);
+                count_zeroes_for_symmetric -= 1;
                 reflexivity.set(paths_container.get(i).get(0) - 1, true);
                 count_zeroes_for_reflexivity -= 1;
                 if(transitivity.get(i) == 0){
