@@ -96,29 +96,9 @@ public class Main {
                                             transitivity.set(i, 1);
                                         }
                                     }
-                                    if(transitivity.get(j) == -1){
-                                        transitivity.set(j, 2);
-                                        deuce_presence = true;
-                                    }
-                                    else{
-                                        if(transitivity.get(j) != 2){
-                                            transitivity.set(j, 1);
-                                        }
-                                    }
-                                    if(transitivity.get(paths_container.indexOf(transitivity_path)) == -1){
-                                        transitivity.set(paths_container.indexOf(transitivity_path), 2);
-                                        deuce_presence = true;
-                                    }
-                                    else{
-                                        if(transitivity.get(paths_container.indexOf(transitivity_path)) != 2){
-                                            transitivity.set(paths_container.indexOf(transitivity_path), 1);
-                                        }
-                                    }
                                 }
-                                else if(transitivity.get(i) != 1 && transitivity.get(j) != 1
-                                        && transitivity.get(i) != 2 && transitivity.get(j) != 2){
+                                else if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
                                     transitivity.set(i, -1);
-                                    transitivity.set(j, -1);
                                 }
                                 else{
                                     if(transitivity.get(i) != 2){
@@ -130,19 +110,6 @@ public class Main {
                                             transitivity.set(i, -1);
                                         }
                                     }
-                                    if(transitivity.get(j) != 2){
-                                        if(transitivity.get(j) != 0 && transitivity.get(j) != -1){
-                                            transitivity.set(j, 2);
-                                            deuce_presence = true;
-                                        }
-                                        else {
-                                            transitivity.set(j, -1);
-                                        }
-                                    }
-                                }
-                            } else {
-                                if(transitivity.get(j) == 0){
-                                    transitivity.set(j, 3);
                                 }
                             }
                         }
