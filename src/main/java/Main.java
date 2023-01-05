@@ -66,10 +66,6 @@ public class Main {
         };
 
         for(int i = 0; i < paths_container.size(); i++){
-            if(Objects.equals(paths_container.get(i).get(0), paths_container.get(i).get(1))){
-                reflexivity.set(paths_container.get(i).get(0) - 1, true);
-                count_zeroes_for_reflexivity -= 1;
-            }
             ArrayList<Integer> reversed_path = new ArrayList<>(2);
             reversed_path.add(paths_container.get(i).get(1));
             reversed_path.add(paths_container.get(i).get(0));
@@ -117,6 +113,8 @@ public class Main {
                 }
             }
             else{
+                reflexivity.set(paths_container.get(i).get(0) - 1, true);
+                count_zeroes_for_reflexivity -= 1;
                 if(transitivity.get(i) == 0){
                     transitivity.set(i, 3);
                 }
