@@ -8,8 +8,7 @@ public class Main {
 
         int[] edge_vertex_container = new int[2];
         boolean deuce_presence = false;
-        int count_zeroes_for_symmetric;
-        int count_zeroes_for_reflexivity;
+        int count_zeroes_for_symmetric; int count_zeroes_for_reflexivity;
 
         String edge_vertex_values = scanner.nextLine();
 
@@ -40,22 +39,7 @@ public class Main {
 
         count_zeroes_for_symmetric = edge_vertex_container[0];
 
-        ArrayList<Boolean> symmetric = new ArrayList<>(edge_vertex_container[0]){
-            {
-                for(int i = 0; i < edge_vertex_container[0]; i++) {
-                    add(false);
-                }
-            }
-        };
-
         count_zeroes_for_reflexivity = edge_vertex_container[1];
-        ArrayList<Boolean> reflexivity = new ArrayList<>(edge_vertex_container[1]){
-            {
-                for(int i = 0; i < edge_vertex_container[1]; i++) {
-                    add(false);
-                }
-            }
-        };
 
         ArrayList<Integer> transitivity = new ArrayList<>(edge_vertex_container[0]){
             {
@@ -86,23 +70,17 @@ public class Main {
                                             }
                                         }
                                     }
-                                    else if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
-                                        transitivity.set(i, -1);
-                                    }
                                     else{
-                                        if(transitivity.get(i) != 2){
-                                            if(transitivity.get(i) != 0 && transitivity.get(i) != -1){
-                                                transitivity.set(i, 2);
-                                                deuce_presence = true;
-                                            }
-                                            else {
-                                                transitivity.set(i, -1);
-                                            }
+                                        if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
+                                            transitivity.set(i, -1);
+                                        }
+                                        else{
+                                            transitivity.set(i, 2);
+                                            deuce_presence = true;
                                         }
                                     }
                                 }
                                 else{
-                                    symmetric.set(i, true);
                                     count_zeroes_for_symmetric -= 1;
                                 }
                             }
@@ -111,9 +89,7 @@ public class Main {
                 }
             }
             else{
-                symmetric.set(i, true);
                 count_zeroes_for_symmetric -= 1;
-                reflexivity.set(paths_container.get(i).get(0) - 1, true);
                 count_zeroes_for_reflexivity -= 1;
                 if(transitivity.get(i) == 0){
                     transitivity.set(i, 3);
