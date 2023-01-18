@@ -6,27 +6,24 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int[] edge_vertex_container = new int[2];
-        boolean deuce_presence = false;
-        int count_zeroes_for_symmetric; int count_zeroes_for_reflexivity;
+        int edges_amount; int vertex_amount;
+        boolean overwrite = false; boolean transitive = false; boolean non_transitive = false;
+        int count_symmetric; int count_reflexivity;
 
         String edge_vertex_values = scanner.nextLine();
 
-        edge_vertex_container[0] = Integer.parseInt(edge_vertex_values.split(" ")[0]);
-        edge_vertex_container[1] = Integer.parseInt(edge_vertex_values.split(" ")[1]);
+        edges_amount = Integer.parseInt(edge_vertex_values.split(" ")[0]);
+        vertex_amount = Integer.parseInt(edge_vertex_values.split(" ")[1]);
 
-        if(edge_vertex_container[0] == 0 && edge_vertex_container[1] == 0){
-            System.out.println("Для пустого графа выполняются все отношения");
-            System.exit(0);
+        if(edges_amount == 0 && vertex_amount == 0){
+            System.out.println("Для пустого графа выполняются все отношения"); System.exit(0);
         }
-        else if(edge_vertex_container[0] == 0 && edge_vertex_container[1] != 0){
-            System.out.println("Граф без ребер антирефлексивен, остальные отношения любые");
-            System.exit(0);
+        else if(edges_amount == 0 && vertex_amount != 0){
+            System.out.println("Граф без ребер антирефлексивен, остальные отношения любые"); System.exit(0);
         }
 
-        ArrayList<ArrayList<Integer>> paths_container = new ArrayList<>(edge_vertex_container[0]);
-
-        for(int i = 0; i < edge_vertex_container[0]; i++) {
+        ArrayList<ArrayList<Integer>> paths_container = new ArrayList<>(edges_amount);
+        for(int i = 0; i < edges_amount; i++) {
             String path_values = scanner.nextLine();
 
             ArrayList<Integer> path = new ArrayList<>(2);
@@ -37,13 +34,11 @@ public class Main {
             paths_container.add(path);
         }
 
-        count_zeroes_for_symmetric = edge_vertex_container[0];
-
-        count_zeroes_for_reflexivity = edge_vertex_container[1];
-
-        ArrayList<Integer> transitivity = new ArrayList<>(edge_vertex_container[0]){
+        count_symmetric = edges_amount;
+        count_reflexivity = vertex_amount;
+        ArrayList<Integer> transitivity = new ArrayList<>(edges_amount){
             {
-                for(int i = 0; i < edge_vertex_container[0]; i++) {
+                for(int i = 0; i < edges_amount; i++) {
                     add(0);
                 }
             }
@@ -61,27 +56,23 @@ public class Main {
                                     transitivity_path.add(paths_container.get(j).get(1));
                                     if (paths_container.contains(transitivity_path)) {
                                         if (transitivity.get(i) == -1){
-                                            transitivity.set(i, 2);
-                                            deuce_presence = true;
+                                            transitivity.set(i, 2); overwrite = true;
                                         }
-                                        else{
-                                            if(transitivity.get(i) != 2){
-                                                transitivity.set(i, 1);
-                                            }
+                                        else if(transitivity.get(i) != 2){
+                                            transitivity.set(i, 1); transitive = true;
                                         }
                                     }
                                     else{
-                                        if(transitivity.get(i) != 1 && transitivity.get(i) != 2){
-                                            transitivity.set(i, -1);
+                                        if(transitivity.get(i) == 1){
+                                            transitivity.set(i, 2); overwrite = true;
                                         }
-                                        else{
-                                            transitivity.set(i, 2);
-                                            deuce_presence = true;
+                                        else if(transitivity.get(i) != 2){
+                                            transitivity.set(i, -1); non_transitive = true;
                                         }
                                     }
                                 }
                                 else{
-                                    count_zeroes_for_symmetric -= 1;
+                                    count_symmetric -= 1;
                                 }
                             }
                         }
@@ -89,38 +80,38 @@ public class Main {
                 }
             }
             else{
-                count_zeroes_for_symmetric -= 1;
-                count_zeroes_for_reflexivity -= 1;
+                count_symmetric -= 1;
+                count_reflexivity -= 1;
                 if(transitivity.get(i) == 0){
                     transitivity.set(i, 3);
                 }
             }
         }
-        if(count_zeroes_for_symmetric == 0){
+        if(count_symmetric == 0){
             System.out.println("Симметричный");
         }
-        else if(count_zeroes_for_symmetric == edge_vertex_container[0]){
+        else if(count_symmetric == edges_amount){
             System.out.println("Антисимметричный");
         }
         else{
             System.out.println("Несимметричный");
         }
-        if(count_zeroes_for_reflexivity == 0){
+        if(count_reflexivity == 0){
             System.out.println("Рефлексивный");
         }
-        else if(count_zeroes_for_reflexivity == edge_vertex_container[1]){
+        else if(count_reflexivity == vertex_amount){
             System.out.println("Антирефлексивный");
         }
         else{
             System.out.println("Нерефлексивный");
         }
-        if(deuce_presence || (transitivity.contains(1) && transitivity.contains(-1))){
+        if(overwrite || (transitive && non_transitive)){
             System.out.println("Нетранзитивный");
         }
-        else if(!transitivity.contains(-1) && transitivity.contains(1)){
+        else if(!non_transitive && transitive){
             System.out.println("Транзитивный");
         }
-        else if(!transitivity.contains(1) && transitivity.contains(-1)){
+        else if(non_transitive){
             System.out.println("Антитранзитивный");
         }
         else {
